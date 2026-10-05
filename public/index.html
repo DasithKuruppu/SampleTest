@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Quotes</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; background: #f6f7f9; color: #222; }
+    h1 { font-size: 1.6rem; }
+    .quote { background: #fff; border-radius: 8px; padding: 16px 20px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .quote p { margin: 0 0 8px; font-size: 1.1rem; }
+    .quote span { color: #666; }
+    button { padding: 8px 16px; font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Random quotes from Postgres</h1>
+  <button id="refresh">Shuffle</button>
+  <div id="quotes"></div>
+
+  <script>
+    const container = document.getElementById('quotes');
+
+    async function load() {
+      container.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/random');
+        if (!res.ok) throw new Error((await res.json()).error);
+        const quotes = await res.json();
+        container.innerHTML = '';
+        for (const q of quotes) {
+          const div = document.createElement('div');
+          div.className = 'quote';
+          const p = document.createElement('p');
+          p.textContent = `“${q.text}”`;
+          const span = document.createElement('span');
+          span.textContent = `— ${q.author}`;
+          div.append(p, span);
+          container.append(div);
+        }
+      } catch (err) {
+        container.textContent = 'Error: ' + err.message;
+      }
+    }
+
+    document.getElementById('refresh').addEventListener('click', load);
+    load();
+  </script>
+</body>
+</html>
