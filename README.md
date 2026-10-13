@@ -31,3 +31,9 @@ createdb sampledb
 psql sampledb -f db/init.sql
 DATABASE_URL=postgres://user:pass@localhost:5432/sampledb npm start
 ```
+
+## Meme and GIF Integration Requirements
+
+- **Native Discord Memes/GIFs Access:** Support retrieving and displaying memes and GIFs directly through native Discord integrations and attachments.
+- **External Website Meme/GIF Searching:** Enable searching for memes and GIFs from external web sources and APIs.
+- **Search Result Limits:** Enforce strict query result limits per search query to maintain performance and prevent rate limiting.
