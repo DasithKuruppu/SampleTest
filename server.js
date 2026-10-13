@@ -1,5 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
+const { seed } = require('./db/seed');
 
 const pool = new Pool({
   connectionString:
@@ -22,4 +23,13 @@ app.get('/api/random', async (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
+
+seed(pool)
+  .then((n) => {
+    console.log(`DB seed complete (${n} rows inserted)`);
+    app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
+  })
+  .catch((err) => {
+    console.error('DB seed failed', err);
+    process.exit(1);
+  });
