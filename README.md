@@ -4,7 +4,7 @@ A minimal Node.js + Express website that shows random rows from a local PostgreS
 
 ## Run
 
-1. Start Postgres (creates the `quotes` table and seeds it from `db/init.sql` on first start):
+1. Start Postgres (creates the `quotes` table on first start):
 
    ```sh
    docker compose up -d
@@ -18,6 +18,10 @@ A minimal Node.js + Express website that shows random rows from a local PostgreS
    ```
 
 3. Open http://localhost:3000 — three random quotes are shown; click **Shuffle** for more.
+
+## Seeding
+
+On every start/deploy the server runs `db/seed.js`, which creates the `quotes` table if missing and inserts seed quotes until it holds at least 10 rows. It is idempotent and never deletes data.
 
 ## Configuration
 
