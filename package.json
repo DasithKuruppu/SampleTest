@@ -4,7 +4,8 @@
   "description": "Simple website showing random data from a local Postgres database",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate": "node db/migrate.js"
   },
   "dependencies": {
     "express": "^4.21.2",

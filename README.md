@@ -24,10 +24,12 @@ A minimal Node.js + Express website that shows random rows from a local PostgreS
 - `DATABASE_URL` — defaults to `postgres://app:app@localhost:5432/sampledb`
 - `PORT` — defaults to `3000`
 
-Using an existing Postgres instead of Docker? Create the database and run the seed:
+Using an existing Postgres instead of Docker? Create the database and run the migration:
 
 ```sh
 createdb sampledb
-psql sampledb -f db/init.sql
+DATABASE_URL=postgres://user:pass@localhost:5432/sampledb npm run migrate
 DATABASE_URL=postgres://user:pass@localhost:5432/sampledb npm start
 ```
+
+`npm run migrate` applies `db/init.sql` and is safe to run repeatedly. Hosting platforms that look for a `migrate` script (such as Roar AI Cloud) will pick it up automatically.
